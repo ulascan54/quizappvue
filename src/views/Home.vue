@@ -73,6 +73,7 @@
 import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 const questionCounter=ref(0)
+let canClick=true
 const currentQuestion=ref({
   question:"",
   answer:1,
@@ -100,16 +101,19 @@ const optionChosen= (el)=>{
 }
 }
 const onOptionClicked= (choice,index)=>{
-  const divContainer= itemsRef[index]
-  if(currentQuestion.value.answer==(index+1)){
-        divContainer.classList.add('option-correct')
-        divContainer.classList.remove('option-default')
-    }else{
-              divContainer.classList.add('option-wrong')
-        divContainer.classList.remove('option-default')
-    }
-    
-    clearSelected(divContainer)
+  if(canClick){
+    const divContainer= itemsRef[index]
+    if(currentQuestion.value.answer==(index+1)){
+          divContainer.classList.add('option-correct')
+          divContainer.classList.remove('option-default')
+      }else{
+                divContainer.classList.add('option-wrong')
+          divContainer.classList.remove('option-default')
+      }
+      
+      clearSelected(divContainer)
+      canClick=false;
+  }
 
 }
 
@@ -126,7 +130,9 @@ const loadQuestion= () => {
  if(questions.length>questionCounter.value){
     currentQuestion.value=questions[questionCounter.value]
     questionCounter.value++;
- }else{
+    canClick=true
+
+}else{
    console.log('aa');
  }
 }
