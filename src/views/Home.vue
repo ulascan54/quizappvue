@@ -1,7 +1,15 @@
 <template>
   <main class="flex h-screen items-center justify-center bg-gray-100">
     <!-- quiz container -->
-    <div class="bg-white container shadow-lg  rounded-lg px-12 py-6">
+    <div class="bg-white container shadow-lg  rounded-lg px-12 py-6 flex-none relative overflow-hidden">
+      <div class="absolute inset-0 overflow-hidden h-44 -top-10 -left-5 rotatebox-3">
+      <img src="https://i.pinimg.com/originals/e8/97/54/e89754046d9a7481f4784fea82175a16.png" alt="" class="object-none ">
+
+      </div>
+
+<!-- content -->
+      <div class="relative z-20">
+
       <!-- score container -->
       <div class="text-right text-gray-800">
         <p class="text-sm leading-3">Score</p>
@@ -67,6 +75,9 @@
           </div>
             <p class="font-bold text-gray-800">2/10</p>
         </div>
+
+      </div>
+
     </div>
   </main>
 </template>
@@ -80,6 +91,9 @@
 }
 .rotatebox-2{
   transform: rotate(-45deg);
+}
+.rotatebox-3{
+  transform: rotate(-5deg);
 }
 .container{
   max-width: 400px;
