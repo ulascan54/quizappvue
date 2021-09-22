@@ -38,7 +38,7 @@
           <div class="rotatebox-1  bg-blue-600 rounded-md w-10 h-10 p-1 font-bold  text-white absolute right-0 -top-2 shadow-md"><p class="rotatebox-2">+10</p></div>
           <div class="rounded-lg font-bold flex p-2 ">
             <!-- option ID -->
-            <div class="bg-gray-800 p-3 rounded-lg">{{index}}</div>
+            <div class="bg-gray-800 p-3 rounded-lg">{{index==0 ? 'A' : index ==1 ? 'B' : index==2 ? 'C' :'D'}}</div>
             <div class="flex items-center pl-6">{{choice}}</div>
           </div>
         </div>
@@ -86,20 +86,7 @@ const currentQuestion=ref({
   choices:[]
 })
 
-const questions=[
-  {
-    question:'Hangi programlama dili düşük seviye bir dildir ?',
-    answer:1,
-    choices:['C','C#','Python','Ruby']
-
-  },
-    {
-    question:'Twitter da maksimum kaç karakterli tweet atılabilir?',
-    answer:3,
-    choices:['120','160','140','100']
-
-  }
-]
+let questions=ref([])
 let itemsRef=[];
 const optionChosen= (el)=>{
   if(el){
@@ -125,6 +112,31 @@ const onOptionClicked= (choice,index)=>{
 
 }
 
+const fetchQuestionsFromServer= async function(){
+  fetch('https://opentdb.com/api.php?amount=10&category=11&difficulty=easy')
+  .then((res)=>{
+    return res.json()
+  }).then((data)=>{
+    const newQuestions=data.results.map((serverQuestion)=>{
+      const arrangedQuestion = {
+        question:serverQuestion.question,
+        choices:'',
+        answer:''
+      }
+      const choices = serverQuestion.incorrect_answers;
+
+      arrangedQuestion.answer=Math.floor(Math.random()*4+1);
+      choices.splice(arrangedQuestion.answer-1,0,serverQuestion.correct_answer)
+      arrangedQuestion.choices=choices
+      return arrangedQuestion
+    })
+    console.log(newQuestions);
+    questions.value=newQuestions
+      loadQuestion()
+       countDownTimer()
+  })
+}
+
 const clearSelected=(selected)=>{
   setTimeout(() => {
     selected.classList.remove('option-correct')
@@ -135,8 +147,8 @@ const clearSelected=(selected)=>{
 }
 
 const loadQuestion= () => {
- if(questions.length>questionCounter.value){
-    currentQuestion.value=questions[questionCounter.value]
+ if(questions.value.length>questionCounter.value){
+    currentQuestion.value=questions.value[questionCounter.value]
     questionCounter.value++;
     canClick=true
     timer.value=100
@@ -159,8 +171,7 @@ const countDownTimer= ()=>{
 }
 
 onMounted(()=>{
-  loadQuestion()
-  countDownTimer()
+  fetchQuestionsFromServer()
 })
 </script>
 
