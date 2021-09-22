@@ -24,50 +24,24 @@
         <!-- soru container -->
       <div class="rounded-lg bg-gray-100 p-2 shadowbox text-center font-bold text-gray-800 mt-8">
         <div class="bg-white p-5">
-          Kim en güçlü marvel karakteridir ?
+          {{currentQuestion.question}}
         </div>
       </div>
       <!-- options container -->
       <div class="mt-8">
 
                 <!-- option container -->
-        <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3 relative option-default">
+                <div v-for="(choice,index) in currentQuestion.choices" :key="index">
+        <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3 relative option-default" @click="onOptionClicked(choice,index)" :ref="optionChosen">
           <div class="rotatebox-1  bg-blue-600 rounded-md w-10 h-10 p-1 font-bold  text-white absolute right-0 -top-2 shadow-md"><p class="rotatebox-2">+10</p></div>
           <div class="rounded-lg font-bold flex p-2 ">
             <!-- option ID -->
-            <div class="bg-gray-800 p-3 rounded-lg">A</div>
-            <div class="flex items-center pl-6">Thor</div>
+            <div class="bg-gray-800 p-3 rounded-lg">{{index}}</div>
+            <div class="flex items-center pl-6">{{choice}}</div>
           </div>
         </div>
-                        <!-- option container -->
-        <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3 relative option-wrong">
-          <div class="rotatebox-1  bg-blue-600 rounded-md w-10 h-10 p-1 font-bold  text-white absolute right-0 -top-2 shadow-md"><p class="rotatebox-2">+10</p></div>
-          <div class="rounded-lg font-bold flex p-2 ">
-            <!-- option ID -->
-            <div class="bg-gray-800 p-3 rounded-lg">B</div>
-            <div class="flex items-center pl-6">Doctor Strange</div>
-          </div>
-        </div>
-
-                <!-- option container -->
-        <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3 relative option-correct">
-          <div class="rotatebox-1  bg-blue-600 rounded-md w-10 h-10 p-1 font-bold  text-white absolute right-0 -top-2 shadow-md"><p class="rotatebox-2">+10</p></div>
-          <div class="rounded-lg font-bold flex p-2 ">
-            <!-- option ID -->
-            <div class="bg-gray-800 p-3 rounded-lg">C</div>
-            <div class="flex items-center pl-6">Ms Marvel</div>
-          </div>
-        </div>
-
-                <!-- option container -->
-        <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3 relative option-default">
-          <div class="rotatebox-1  bg-blue-600 rounded-md w-10 h-10 p-1 font-bold  text-white absolute right-0 -top-2 shadow-md"><p class="rotatebox-2">+10</p></div>
-          <div class="rounded-lg font-bold flex p-2 ">
-            <!-- option ID -->
-            <div class="bg-gray-800 p-3 rounded-lg">D</div>
-            <div class="flex items-center pl-6">Hulk</div>
-          </div>
-        </div>
+                </div>
+   
 
 
         <!-- option container -->
@@ -90,6 +64,55 @@
     </div>
   </main>
 </template>
+
+<script setup>
+import { ref } from "@vue/reactivity";
+import { onMounted } from "@vue/runtime-core";
+const questionCounter=ref(0)
+const currentQuestion=ref({
+  question:"",
+  answer:1,
+  choices:[]
+})
+
+const questions=[
+  {
+    question:'Hangi programlama dili düşük seviye bir dildir ?',
+    answer:1,
+    choices:['C','C#','Python','Ruby']
+
+  },
+    {
+    question:'Twitter da maksimum kaç karakterli tweet atılabilir?',
+    answer:3,
+    choices:['120','160','140','100']
+
+  }
+]
+let itemsRef=[];
+const optionChosen= (el)=>{
+  if(el){
+    itemsRef.push(el)
+}
+}
+const onOptionClicked= (choice,index)=>{
+  const divContainer= itemsRef[index]
+  if(currentQuestion.value.answer==(index+1)){
+        divContainer.classList.add('option-correct')
+        divContainer.classList.remove('option-default')
+    }else{
+              divContainer.classList.add('option-wrong')
+        divContainer.classList.remove('option-default')
+    }
+}
+
+const onQuizStart= () => {
+  currentQuestion.value=questions[questionCounter.value]
+}
+onMounted(()=>{
+  onQuizStart()
+})
+</script>
 
 <style scoped>
 .shadowbox{
