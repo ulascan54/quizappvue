@@ -29,40 +29,49 @@
       </div>
       <!-- options container -->
       <div class="mt-8">
-        <!-- option container -->
-        <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3">
-          <div class="bg-white rounded-lg font-bold flex p-2">
+
+                <!-- option container -->
+        <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3 relative option-default">
+          <div class="rotatebox-1  bg-blue-600 rounded-md w-10 h-10 p-1 font-bold  text-white absolute right-0 -top-2 shadow-md"><p class="rotatebox-2">+10</p></div>
+          <div class="rounded-lg font-bold flex p-2 ">
             <!-- option ID -->
-            <div class="bg-gray-400 p-3 rounded-lg">A</div>
+            <div class="bg-gray-800 p-3 rounded-lg">A</div>
             <div class="flex items-center pl-6">Thor</div>
           </div>
         </div>
-                <!-- option container -->
-        <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3">
-          <div class="bg-red-600 rounded-lg font-bold flex p-2 text-white">
+                        <!-- option container -->
+        <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3 relative option-wrong">
+          <div class="rotatebox-1  bg-blue-600 rounded-md w-10 h-10 p-1 font-bold  text-white absolute right-0 -top-2 shadow-md"><p class="rotatebox-2">+10</p></div>
+          <div class="rounded-lg font-bold flex p-2 ">
             <!-- option ID -->
             <div class="bg-gray-800 p-3 rounded-lg">B</div>
             <div class="flex items-center pl-6">Doctor Strange</div>
           </div>
         </div>
+
                 <!-- option container -->
-        <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3 relative">
+        <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3 relative option-correct">
           <div class="rotatebox-1  bg-blue-600 rounded-md w-10 h-10 p-1 font-bold  text-white absolute right-0 -top-2 shadow-md"><p class="rotatebox-2">+10</p></div>
-          <div class="bg-green-600 rounded-lg font-bold flex p-2 text-white">
+          <div class="rounded-lg font-bold flex p-2 ">
             <!-- option ID -->
             <div class="bg-gray-800 p-3 rounded-lg">C</div>
             <div class="flex items-center pl-6">Ms Marvel</div>
           </div>
         </div>
 
-        <!-- option container -->
-        <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3">
-          <div class="bg-white rounded-lg font-bold flex p-2">
+                <!-- option container -->
+        <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3 relative option-default">
+          <div class="rotatebox-1  bg-blue-600 rounded-md w-10 h-10 p-1 font-bold  text-white absolute right-0 -top-2 shadow-md"><p class="rotatebox-2">+10</p></div>
+          <div class="rounded-lg font-bold flex p-2 ">
             <!-- option ID -->
-            <div class="bg-gray-400 p-3 rounded-lg">D</div>
+            <div class="bg-gray-800 p-3 rounded-lg">D</div>
             <div class="flex items-center pl-6">Hulk</div>
           </div>
         </div>
+
+
+        <!-- option container -->
+     
 
 
 
