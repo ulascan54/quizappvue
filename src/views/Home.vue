@@ -13,7 +13,7 @@
       <!-- score container -->
       <div class="text-right text-gray-800">
         <p class="text-sm leading-3">Score</p>
-        <p class="font-bold">60</p>
+        <p class="font-bold">{{score}}</p>
       </div>
       <!-- timer container -->
         <div class="bg-white shadow-lg p-1 rounded-full w-full h-5 ">
@@ -56,7 +56,7 @@
         <div class="mt-8 text-center">
           <div class="h-1 w-12 bg-gray-200 rounded-full mx-auto">
           </div>
-            <p class="font-bold text-gray-200">2/10</p>
+            <p class="font-bold text-gray-200">{{questionCounter}}/{{questions.length}}</p>
         </div>
 
       </div>
@@ -74,6 +74,7 @@ import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 const questionCounter=ref(0)
 let canClick=true
+let score=ref(0)
 const currentQuestion=ref({
   question:"",
   answer:1,
@@ -104,6 +105,7 @@ const onOptionClicked= (choice,index)=>{
   if(canClick){
     const divContainer= itemsRef[index]
     if(currentQuestion.value.answer==(index+1)){
+      score.value+=10
           divContainer.classList.add('option-correct')
           divContainer.classList.remove('option-default')
       }else{
@@ -131,8 +133,8 @@ const loadQuestion= () => {
     currentQuestion.value=questions[questionCounter.value]
     questionCounter.value++;
     canClick=true
-
-}else{
+}
+else{
    console.log('aa');
  }
 }
