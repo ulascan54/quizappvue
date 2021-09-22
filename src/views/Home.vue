@@ -54,13 +54,17 @@
 
               <!-- progress container -->
         <div class="mt-8 text-center">
-          <div class="h-1 w-12 bg-gray-800 rounded-full mx-auto">
+          <div class="h-1 w-12 bg-gray-200 rounded-full mx-auto">
           </div>
-            <p class="font-bold text-gray-800">2/10</p>
+            <p class="font-bold text-gray-200">2/10</p>
         </div>
 
       </div>
 
+
+
+      <div class="absolute inset-0 overflow-hidden h-44   mt-auto" style="background: url('https://i.pinimg.com/originals/e8/97/54/e89754046d9a7481f4784fea82175a16.png') bottom;">
+      </div>
     </div>
   </main>
 </template>
@@ -104,13 +108,30 @@ const onOptionClicked= (choice,index)=>{
               divContainer.classList.add('option-wrong')
         divContainer.classList.remove('option-default')
     }
+    
+    clearSelected(divContainer)
+
 }
 
-const onQuizStart= () => {
-  currentQuestion.value=questions[questionCounter.value]
+const clearSelected=(selected)=>{
+  setTimeout(() => {
+    selected.classList.remove('option-correct')
+    selected.classList.remove('option-wrong')
+    selected.classList.add('option-default')
+    loadQuestion()
+  }, 1000);
+}
+
+const loadQuestion= () => {
+ if(questions.length>questionCounter.value){
+    currentQuestion.value=questions[questionCounter.value]
+    questionCounter.value++;
+ }else{
+   console.log('aa');
+ }
 }
 onMounted(()=>{
-  onQuizStart()
+  loadQuestion()
 })
 </script>
 
