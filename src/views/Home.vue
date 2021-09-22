@@ -1,5 +1,7 @@
 <template>
   <main class="flex h-screen items-center justify-center bg-gray-100">
+
+    <Complate v-if="endQUis"/>
     <!-- quiz container -->
     <div class="bg-white container shadow-lg  rounded-lg px-12 py-6 flex-none relative overflow-hidden">
       <div class="absolute inset-0 overflow-hidden h-44 -top-10 -left-5 rotatebox-3">
@@ -12,7 +14,7 @@
 
       <!-- score container -->
       <div class="text-right text-gray-800">
-        <p class="text-sm leading-3">Score</p>
+        <p class="text-sm leading-3">Skor</p>
         <p class="font-bold">{{score}}</p>
       </div>
       <!-- timer container -->
@@ -72,8 +74,10 @@
 <script setup>
 import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
+import Complate from '../components/Complate.vue'
 const questionCounter=ref(0)
 const timer=ref(20)
+const endQUis=ref(false)
 let canClick=true
 let score=ref(0)
 const currentQuestion=ref({
@@ -138,7 +142,7 @@ const loadQuestion= () => {
     timer.value=100
 }
 else{
-   console.log('aa');
+   endQUis.value=true
  }
 }
 
