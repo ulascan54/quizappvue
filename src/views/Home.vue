@@ -16,8 +16,8 @@
         <p class="font-bold">{{score}}</p>
       </div>
       <!-- timer container -->
-        <div class="bg-white shadow-lg p-1 rounded-full w-full h-5 ">
-          <div class=" bg-blue-700 rounded-full w-11/12 h-full"></div>
+        <div class="bg-gray-200 shadow-lg p-1 rounded-full w-full h-5 ">
+          <div class=" bg-blue-700 rounded-full  h-full" :style="`width:${timer}%;`"></div>
         </div>
 
 
@@ -73,6 +73,7 @@
 import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 const questionCounter=ref(0)
+const timer=ref(20)
 let canClick=true
 let score=ref(0)
 const currentQuestion=ref({
@@ -114,6 +115,7 @@ const onOptionClicked= (choice,index)=>{
       }
       
       clearSelected(divContainer)
+      timer.value=100
       canClick=false;
   }
 
@@ -133,13 +135,28 @@ const loadQuestion= () => {
     currentQuestion.value=questions[questionCounter.value]
     questionCounter.value++;
     canClick=true
+    timer.value=100
 }
 else{
    console.log('aa');
  }
 }
+
+const countDownTimer= ()=>{
+  let interVal = setInterval(()=>{
+    if(timer.value>0){
+      timer.value--;
+    }
+    else{
+      console.log('timer is up');
+      clearInterval(interVal)
+    }
+  },150)
+}
+
 onMounted(()=>{
   loadQuestion()
+  countDownTimer()
 })
 </script>
 
