@@ -19,9 +19,8 @@
       </div>
       <!-- timer container -->
         <div class="bg-gray-200 shadow-lg p-1 rounded-full w-full h-5 ">
-          <div class=" bg-blue-700 rounded-full  h-full" :style="`width:${timer}%;`"></div>
+          <div :class="`rounded-full  h-full transition-all ${timer > 91 ? 'bg-blue-700' : timer >61 ? 'bg-green-600': timer>41 ? 'bg-yellow-500' : timer>31 ? 'bg-yellow-700' : timer>11 ?'bg-red-700': timer > -1 ? 'bg-red-900':'bg-blue-700'}`" :style="`width:${timer}%;`"></div>
         </div>
-
 
         <!-- soru container -->
       <div class="rounded-lg bg-gray-100 p-2 shadowbox text-center font-bold text-gray-800 mt-8">
