@@ -1,7 +1,7 @@
 <template>
   <main class="flex h-screen items-center justify-center bg-gray-100">
 
-    <Complate v-if="endQUis" :score="score" :status="status"/>
+    <Complate v-if="endQUis" :score="score" :status="status" :clickRestart="clickRestart"/>
     <!-- quiz container -->
     <div class="bg-white container shadow-lg  rounded-lg px-12 py-6 flex-none relative overflow-hidden">
       <div class="absolute inset-0 overflow-hidden h-44 -top-10 -left-5 rotatebox-3">
@@ -178,6 +178,19 @@ const countDownTimer= ()=>{
       }
   },150)
 }
+
+const clickRestart = () => {
+  fetchQuestionsFromServer()
+  setTimeout(() => {
+    endQUis.value=false
+    timer.value=100
+    countDownTimer()
+    score.value=0
+    questionCounter.value=0
+    canClick=true
+  }, 1000);
+}
+
 
 onMounted(()=>{
   fetchQuestionsFromServer()
