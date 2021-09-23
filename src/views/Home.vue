@@ -1,7 +1,7 @@
 <template>
   <main class="flex h-screen items-center justify-center bg-gray-100">
 
-    <Complate v-if="endQUis"/>
+    <Complate v-if="endQUis" :score="score" :status="status"/>
     <!-- quiz container -->
     <div class="bg-white container shadow-lg  rounded-lg px-12 py-6 flex-none relative overflow-hidden">
       <div class="absolute inset-0 overflow-hidden h-44 -top-10 -left-5 rotatebox-3">
@@ -79,6 +79,7 @@ const questionCounter=ref(0)
 const timer=ref(20)
 const endQUis=ref(false)
 let canClick=true
+const status = ref('')
 let score=ref(0)
 const currentQuestion=ref({
   question:"",
@@ -155,18 +156,27 @@ const loadQuestion= () => {
 }
 else{
    endQUis.value=true
+   status.value='Sınav Tamamlandı !'
+
  }
 }
 
 const countDownTimer= ()=>{
   let interVal = setInterval(()=>{
-    if(timer.value>0){
-      timer.value--;
-    }
-    else{
-      console.log('timer is up');
+    if(endQUis.value){
       clearInterval(interVal)
     }
+    else{
+
+      if(timer.value>0){
+        timer.value--;
+    }
+    else{
+      endQUis.value=true
+      clearInterval(interVal)
+      status.value='Süre Bitti :('
+    }
+      }
   },150)
 }
 
