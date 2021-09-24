@@ -1,5 +1,58 @@
 <template>
-  <main v-if="newQuizUser" class="flex h-screen items-center justify-center bg-gray-100">
+  <div v-if="newQuizUser==-1" class="flex h-screen items-center justify-center bg-gray-100">
+
+    <!-- quiz container -->
+    <div class="bg-white container shadow-lg  rounded-lg px-12 py-6 flex-none relative overflow-hidden">
+      <div class="absolute inset-0 overflow-hidden h-44 -top-10 -left-5 rotatebox-3">
+      <img src="https://i.pinimg.com/originals/e8/97/54/e89754046d9a7481f4784fea82175a16.png" alt="" class="object-none ">
+
+      </div>
+
+<!-- content -->
+      <div class="relative z-20">
+
+      <!-- score container -->
+      <!-- timer container -->
+
+
+        <!-- soru container -->
+      <div class="rounded-lg bg-gray-100 p-2 shadowbox text-center font-bold mt-8">
+        <div class="bg-white p-5">
+         <p class="text-xl text-gray-800 mb-3"> Welcome to the Quiz app!</p>
+         <p class="text-sm text-gray-600 "> Enter your name and email address to test yourself</p>
+        </div>
+      </div>
+      <!-- options container -->
+      <div class="mt-8">
+
+                <!-- option container -->
+        <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3 relative " >
+          <div class="rounded-lg font-bold flex p-2 ">
+            <!-- option ID -->
+            <div class="w-full">
+              <input type="text" placeholder="Name" class="px-2 py-1 border border-blue-400 mb-3 rounded-md w-full">
+              <input type="email" placeholder="Email" class="px-2 py-1 border border-blue-400 mb-3 rounded-md w-full">
+              <button class=" bg-blue-400 hover:bg-blue-500 text-white w-20 rounded-md py-1 px-4">Next</button>
+            </div>
+        </div>
+
+      </div>
+
+      </div>
+              <!-- progress container -->
+        <div class="mt-8 text-center">
+          <div class="h-1 w-12 bg-gray-200 rounded-full mx-auto">
+          </div>
+            <p class="font-bold text-gray-200">Created by Ulaş Can Demirbağ</p>
+        </div>
+
+      </div>
+
+      <div class="absolute inset-0 overflow-hidden h-44   mt-auto" style="background: url('https://i.pinimg.com/originals/e8/97/54/e89754046d9a7481f4784fea82175a16.png') bottom;">
+      </div>
+    </div>
+  </div>
+  <div v-if="newQuizUser" class="flex h-screen items-center justify-center bg-gray-100">
 
     <!-- quiz container -->
     <div class="bg-white container shadow-lg  rounded-lg px-12 py-6 flex-none relative overflow-hidden">
@@ -73,10 +126,10 @@
       <div class="absolute inset-0 overflow-hidden h-44   mt-auto" style="background: url('https://i.pinimg.com/originals/e8/97/54/e89754046d9a7481f4784fea82175a16.png') bottom;">
       </div>
     </div>
-  </main>
-  <main v-else class="flex h-screen items-center justify-center bg-gray-100">
+  </div>
+  <main v-if="!newQuizUser" class="flex h-screen items-center justify-center bg-gray-100">
 
-    <Complate v-if="endQUis" :score="score" :status="status" :clickRestart="clickRestart"/>
+    <Complate v-if="endQUis" :score="score" :status="status" :clickRestart="clickRestart" :clickDone="clickDone"/>
     <!-- quiz container -->
     <div class="bg-white container shadow-lg  rounded-lg px-12 py-6 flex-none relative overflow-hidden">
       <div class="absolute inset-0 overflow-hidden h-44 -top-10 -left-5 rotatebox-3">
@@ -177,6 +230,8 @@ const onExamClicked =(examUrl,index)=>{
      newQuizUser.value=false
     examContainer.classList.remove('option-correct')
     examContainer.classList.add('option-default')
+    examRefs=[];
+      canExamCLick=true;
     }, 1000);
   }
       canExamCLick=false;
@@ -282,6 +337,17 @@ const clickRestart =  () => {
      canClick=true
    }
      }, 1000);
+}
+const clickDone = ()=>{
+  questions.value=[]
+   endQUis.value=false
+     timer.value=100
+     countDownTimer()
+     score.value=0
+     questionCounter.value=0
+     canClick=true
+  newQuizUser.value=true
+  itemsRef=[]
 }
 
 
