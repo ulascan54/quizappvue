@@ -1,5 +1,80 @@
 <template>
-  <main class="flex h-screen items-center justify-center bg-gray-100">
+  <main v-if="newQuizUser" class="flex h-screen items-center justify-center bg-gray-100">
+
+    <!-- quiz container -->
+    <div class="bg-white container shadow-lg  rounded-lg px-12 py-6 flex-none relative overflow-hidden">
+      <div class="absolute inset-0 overflow-hidden h-44 -top-10 -left-5 rotatebox-3">
+      <img src="https://i.pinimg.com/originals/e8/97/54/e89754046d9a7481f4784fea82175a16.png" alt="" class="object-none ">
+
+      </div>
+
+<!-- content -->
+      <div class="relative z-20">
+
+      <!-- score container -->
+      <!-- timer container -->
+
+
+        <!-- soru container -->
+      <div class="rounded-lg bg-gray-100 p-2 shadowbox text-center font-bold text-gray-800 mt-8">
+        <div class="bg-white p-5">
+          Choose your exam !
+        </div>
+      </div>
+      <!-- options container -->
+      <div class="mt-8">
+
+                <!-- option container -->
+        <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3 relative option-default" @click="onExamClicked('https://opentdb.com/api.php?amount=10&category=18&difficulty=medium&type=multiple',0)" :ref="examChosen">
+          <div class="rotatebox-1  bg-blue-600 rounded-md font-bold  text-white absolute right-0 -top-2 shadow-md "></div>
+          <div class="rounded-lg font-bold flex p-2 ">
+            <!-- option ID -->
+            <div class="bg-gray-800 p-3 rounded-lg">A</div>
+            <div class="flex items-center pl-6">Computers</div>
+          </div>
+        </div>
+
+              <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3 relative option-default" @click="onExamClicked('https://opentdb.com/api.php?amount=10&category=23&difficulty=medium&type=multiple',1)" :ref="examChosen">
+          <div class="rotatebox-1  bg-blue-600 rounded-md  font-bold  text-white absolute right-0 -top-2 shadow-md "></div>
+          <div class="rounded-lg font-bold flex p-2 ">
+            <!-- option ID -->
+            <div class="bg-gray-800 p-3 rounded-lg">B</div>
+            <div class="flex items-center pl-6">History</div>
+          </div>
+        </div>
+
+              <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3 relative option-default" @click="onExamClicked('https://opentdb.com/api.php?amount=10&category=24&difficulty=medium&type=multiple',2)" :ref="examChosen">
+          <div class="rotatebox-1  bg-blue-600 rounded-md  font-bold  text-white absolute right-0 -top-2 shadow-md "></div>
+          <div class="rounded-lg font-bold flex p-2 ">
+            <!-- option ID -->
+            <div class="bg-gray-800 p-3 rounded-lg">C</div>
+            <div class="flex items-center pl-6">Politics</div>
+          </div>
+        </div>
+
+              <div class="shadowbox bg-gray-100 p-2 rounded-lg mb-3 relative option-default" @click="onExamClicked('https://opentdb.com/api.php?amount=10&category=27&difficulty=medium&type=multiple',3)" :ref="examChosen">
+          <div class="rotatebox-1  bg-blue-600 rounded-md  font-bold  text-white absolute right-0 -top-2 shadow-md "></div>
+          <div class="rounded-lg font-bold flex p-2 ">
+            <!-- option ID -->
+            <div class="bg-gray-800 p-3 rounded-lg">D</div>
+            <div class="flex items-center pl-6">Animals</div>
+          </div>
+        </div>
+      </div>
+              <!-- progress container -->
+        <div class="mt-8 text-center">
+          <div class="h-1 w-12 bg-gray-200 rounded-full mx-auto">
+          </div>
+            <p class="font-bold text-gray-200">Created by Ulaş Can Demirbağ</p>
+        </div>
+
+      </div>
+
+      <div class="absolute inset-0 overflow-hidden h-44   mt-auto" style="background: url('https://i.pinimg.com/originals/e8/97/54/e89754046d9a7481f4784fea82175a16.png') bottom;">
+      </div>
+    </div>
+  </main>
+  <main v-else class="flex h-screen items-center justify-center bg-gray-100">
 
     <Complate v-if="endQUis" :score="score" :status="status" :clickRestart="clickRestart"/>
     <!-- quiz container -->
@@ -14,7 +89,7 @@
 
       <!-- score container -->
       <div class="text-right text-gray-800">
-        <p class="text-sm leading-3">Skor</p>
+        <p class="text-sm leading-3">Score</p>
         <p class="font-bold">{{score}}</p>
       </div>
       <!-- timer container -->
@@ -42,17 +117,7 @@
           </div>
         </div>
                 </div>
-   
-
-
-        <!-- option container -->
-     
-
-
-
-
       </div>
-
               <!-- progress container -->
         <div class="mt-8 text-center">
           <div class="h-1 w-12 bg-gray-200 rounded-full mx-auto">
@@ -62,8 +127,6 @@
 
       </div>
 
-
-
       <div class="absolute inset-0 overflow-hidden h-44   mt-auto" style="background: url('https://i.pinimg.com/originals/e8/97/54/e89754046d9a7481f4784fea82175a16.png') bottom;">
       </div>
     </div>
@@ -72,12 +135,13 @@
 
 <script setup>
 import { ref } from "@vue/reactivity";
-import { onMounted } from "@vue/runtime-core";
 import Complate from '../components/Complate.vue'
 const questionCounter=ref(0)
 const timer=ref(20)
 const endQUis=ref(false)
 let canClick=true
+let newQuizUser=ref(true)
+let url =ref('')
 const status = ref('')
 let score=ref(0)
 const currentQuestion=ref({
@@ -93,6 +157,32 @@ const optionChosen= (el)=>{
     itemsRef.push(el)
 }
 }
+let examRefs=[];
+const examChosen= (el)=>{
+  if(el){
+    examRefs.push(el)
+}
+}
+
+
+  let canExamCLick=true
+const onExamClicked =(examUrl,index)=>{
+  url.value =examUrl
+  const examContainer =examRefs[index]
+  if(canExamCLick){
+    examContainer.classList.add('option-correct')
+    examContainer.classList.remove('option-default')
+     fetchQuestionsFromServer()
+    setTimeout(() => {
+     newQuizUser.value=false
+    examContainer.classList.remove('option-correct')
+    examContainer.classList.add('option-default')
+    }, 1000);
+  }
+      canExamCLick=false;
+
+}
+
 const onOptionClicked= (choice,index)=>{
   if(canClick){
     const divContainer= itemsRef[index]
@@ -113,7 +203,7 @@ const onOptionClicked= (choice,index)=>{
 }
 
 const fetchQuestionsFromServer= async function(){
-  fetch('https://opentdb.com/api.php?amount=10&category=11&difficulty=easy')
+  fetch(url.value)
   .then((res)=>{
     return res.json()
   }).then((data)=>{
@@ -155,7 +245,7 @@ const loadQuestion= () => {
 }
 else{
    endQUis.value=true
-   status.value='Sınav Tamamlandı !'
+   status.value='Quiz Completed !'
 
  }
 }
@@ -173,28 +263,28 @@ const countDownTimer= ()=>{
     else{
       endQUis.value=true
       clearInterval(interVal)
-      status.value='Süre Bitti :('
+      status.value='Tİme is over :('
     }
       }
   },150)
 }
 
-const clickRestart = () => {
-  fetchQuestionsFromServer()
+const clickRestart =  () => {
+  questions.value=[]
+   fetchQuestionsFromServer()
   setTimeout(() => {
-    endQUis.value=false
-    timer.value=100
-    countDownTimer()
-    score.value=0
-    questionCounter.value=0
-    canClick=true
-  }, 1000);
+    if(questions.value){
+      endQUis.value=false
+     timer.value=100
+     countDownTimer()
+     score.value=0
+     questionCounter.value=1
+     canClick=true
+   }
+     }, 1000);
 }
 
 
-onMounted(()=>{
-  fetchQuestionsFromServer()
-})
 </script>
 
 <style scoped>
